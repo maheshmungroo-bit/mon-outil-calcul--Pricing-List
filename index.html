@@ -200,37 +200,27 @@
         </div>
 
 
-        <!-- === PARTIE 1: INPUTS GLOBAUX === -->
+        <!-- === PARTIE 1: SÉLECTION DE LA GAMME === -->
         <div class="card mb-8">
             <h2 class="section-title">
-                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
-                Partie 1 : Variables Clés
+                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M21 14H3"/><path d="M10 18H3"/></svg>
+                Partie 1 : Sélection de la Gamme
                 <button onclick="saveData()" class="no-print ml-auto w-8 h-8 flex items-center justify-center rounded bg-slate-100 hover:bg-slate-200 transition-colors" title="Sauvegarder les données">
                     <svg class="w-5 h-5 text-slate-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
                 </button>
             </h2>
-            <div class="grid md:grid-cols-2 gap-8">
+            <div class="grid md:grid-cols-1 gap-8">
                 <div>
-                    <label for="product_range" class="block text-lg font-semibold text-gray-700">1. Gamme de Produit</label>
-                    <p class="text-sm text-gray-500 mb-2">Sélectionnez pour charger les coûts par défaut.</p>
+                    <label for="product_range" class="block text-lg font-semibold text-gray-700">Gamme de Produit</label>
+                    <p class="text-sm text-gray-500 mb-2">Sélectionnez la gamme pour afficher et modifier ses coûts ci-dessous.</p>
                     <select id="product_range" class="w-full p-2 border border-gray-300 rounded-md bg-white" onchange="updateDirectCosts()">
                         <!-- Options will be populated by script -->
                     </select>
                 </div>
-                 <div>
-                    <label class="block text-lg font-semibold text-gray-700">2. Volume Annuel de Production par Gamme</label>
-                    <p class="text-sm text-gray-500 mb-2">Nombre de pièces produites par an pour chaque gamme.</p>
-                    <div id="volume-inputs-container" class="space-y-2 bg-slate-50 p-3 rounded-md">
-                        <!-- Les champs de volume seront injectés ici par le script -->
-                    </div>
-                    <div class="mt-3 text-right font-bold text-gray-700">
-                        Volume Total Annuel : <span id="total-volume-display" class="text-lg text-blue-600">...</span> pièces
-                    </div>
-                </div>
             </div>
         </div>
 
-        <!-- === PARTIE 2: CALCUL DES COÛTS DE REVIENT === -->
+        <!-- === PARTIE 2: COÛT DE REVIENT PAR PIÈCE === -->
         <div class="card mb-8">
             <h2 class="section-title">
                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2z"/><path d="M8 12h8"/><path d="M12 16V8"/></svg>
@@ -524,11 +514,32 @@
             </div>
         </div>
 
-        <!-- === PARTIE 4: ANALYSE DU SEUIL DE RENTABILITÉ === -->
+        <!-- === PARTIE 4: VOLUME DE PRODUCTION === -->
+        <div class="card mb-8">
+            <h2 class="section-title">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                Partie 4 : Volume de Production Annuel
+                <button onclick="saveData()" class="no-print ml-auto w-8 h-8 flex items-center justify-center rounded bg-slate-100 hover:bg-slate-200 transition-colors" title="Sauvegarder les données">
+                    <svg class="w-5 h-5 text-slate-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                </button>
+            </h2>
+            <div>
+                <label class="block text-lg font-semibold text-gray-700">Volume par Gamme</label>
+                <p class="text-sm text-gray-500 mb-2">Nombre de pièces produites par an pour chaque gamme. Ce total sert à calculer le coût indirect par pièce.</p>
+                <div id="volume-inputs-container" class="space-y-2 bg-slate-50 p-3 rounded-md">
+                    <!-- Les champs de volume seront injectés ici par le script -->
+                </div>
+                <div class="mt-3 text-right font-bold text-gray-700">
+                    Volume Total Annuel : <span id="total-volume-display" class="text-lg text-blue-600">...</span> pièces
+                </div>
+            </div>
+        </div>
+
+        <!-- === PARTIE 5: ANALYSE DU SEUIL DE RENTABILITÉ === -->
         <div class="card">
             <h2 class="section-title">
                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18.7 8a6 6 0 0 0-8.4-5.2C7.3 3.4 4.3 6.4 3 9.8"/><path d="M12 12a4 4 0 0 0 4-4"/></svg>
-                Partie 4 : Seuil de Rentabilité
+                Partie 5 : Seuil de Rentabilité
                 <button onclick="saveData()" class="no-print ml-auto w-8 h-8 flex items-center justify-center rounded bg-slate-100 hover:bg-slate-200 transition-colors" title="Sauvegarder les données">
                     <svg class="w-5 h-5 text-slate-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
                 </button>
@@ -1253,4 +1264,5 @@
     </script>
 </body>
 </html>
+
 
