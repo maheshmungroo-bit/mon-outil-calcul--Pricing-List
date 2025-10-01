@@ -731,16 +731,16 @@
             }
         }
         
-        async function loadData() {
+        // --- REAL-TIME LISTENER ---
+        function setupRealtimeListener() {
             if (!isFirebaseConfigured) {
-                console.log("Firebase non configuré. Chargement des données par défaut.");
+                console.log("Firebase non configuré. Le mode temps réel est désactivé.");
                 return;
             }
-            try {
-                const docRef = db.collection("calculator").doc("calculatorState");
-                const doc = await docRef.get();
 
+            db.collection("calculator").doc("calculatorState").onSnapshot((doc) => {
                 if (doc.exists) {
+                    console.log("Données reçues en temps réel.");
                     const parsedData = doc.data();
                     
                     if (parsedData.productData) {
@@ -781,22 +781,26 @@
                         });
                     }
 
-                    if (parsedData.selectedRange) {
-                        const selector = document.getElementById('product_range');
-                        if (Array.from(selector.options).some(opt => opt.value === parsedData.selectedRange)) {
-                            selector.value = parsedData.selectedRange;
-                        }
+                    const selector = document.getElementById('product_range');
+                    if (parsedData.selectedRange && Array.from(selector.options).some(opt => opt.value === parsedData.selectedRange)) {
+                       if (selector.value !== parsedData.selectedRange) {
+                           selector.value = parsedData.selectedRange;
+                       }
                     }
 
-                    showNotification('Derniers coûts chargés depuis la base de données.', 1500);
+                    // Re-render UI with new data
+                    renderVolumeInputs();
+                    renderMarketCoefficients();
+                    updateDirectCosts(); // This will trigger calculateAll
 
                 } else {
                     console.log("Aucun document de sauvegarde trouvé en ligne.");
                 }
-            } catch (error) {
-                console.error("Erreur de chargement depuis Firebase:", error);
-            }
+            }, (error) => {
+                console.error("Erreur avec l'écouteur temps réel:", error);
+            });
         }
+
 
         // --- INITIALIZATION & UI RENDERING ---
         async function initCalculator() {
@@ -804,11 +808,8 @@
                 document.getElementById('firebase-warning').classList.remove('hidden');
             }
             populateRangeSelector();
-            await loadData(); 
             await fetchExchangeRates(); 
-            renderVolumeInputs();
-            renderMarketCoefficients();
-            updateDirectCosts();
+            setupRealtimeListener(); // This will load data and listen for changes
         }
 
         async function fetchExchangeRates() {
