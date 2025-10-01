@@ -110,10 +110,40 @@
             }
         }
     </style>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 </head>
 <body onload="initCalculator()">
 
+    <script>
+        // --- VOTRE CONFIGURATION FIREBASE ---
+        const firebaseConfig = {
+          apiKey: "AIzaSyA3FyL-6WQy7GhgogO_A20h5-Qo0kFgpS0",
+          authDomain: "pricing-5fab2.firebaseapp.com",
+          projectId: "pricing-5fab2",
+          storageBucket: "pricing-5fab2.appspot.com",
+          messagingSenderId: "584666625551",
+          appId: "1:584666625551:web:6cfdf06bd4e643e426557a"
+        };
+
+        // --- INITIALISATION DE FIREBASE ---
+        let db;
+        let isFirebaseConfigured = false;
+        if (firebaseConfig.projectId && firebaseConfig.projectId !== "VOTRE_PROJET_ID") {
+            firebase.initializeApp(firebaseConfig);
+            db = firebase.firestore();
+            isFirebaseConfigured = true;
+        }
+    </script>
+
     <div class="max-w-7xl mx-auto p-4 sm:p-8">
+
+        <!-- Bannière d'alerte Firebase -->
+        <div id="firebase-warning" class="hidden bg-red-100 border-l-4 border-red-500 text-red-700 p-4 m-8 mb-8" role="alert">
+            <p class="font-bold">Configuration requise</p>
+            <p>Votre projet Firebase n'est pas encore configuré. Veuillez copier votre `firebaseConfig` depuis la console Firebase dans le fichier HTML pour activer la sauvegarde en ligne.</p>
+        </div>
 
         <!-- Header -->
         <div class="flex flex-wrap justify-between items-center mb-8 gap-4">
@@ -323,7 +353,7 @@
                 <!-- SCENARIO EUROPE -->
                 <div class="bg-blue-50 border border-blue-200 p-6 rounded-lg">
                     <h3 class="font-bold text-xl mb-4 text-blue-800 flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20z"/><path d="M2 12h20"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20z"/><path d="M2 12h20"/></svg>
                         Scénario 1 : Vente en EUROPE
                     </h3>
                     <h4 class="font-semibold mb-2 text-gray-700">C. Coûts Logistiques (par pièce)</h4>
@@ -352,7 +382,7 @@
                 <!-- SCENARIO EAU -->
                 <div class="bg-green-50 border border-green-200 p-6 rounded-lg">
                     <h3 class="font-bold text-xl mb-4 text-green-800 flex items-center gap-2">
-                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.54 2.25a.75.75 0 0 1 .46 1.34l-2.5 1.25a.75.75 0 0 0-.46 1.34l2.5 1.25a.75.75 0 0 1-.46 1.34l-10-5a.75.75 0 0 1 0-1.34l10-5Z"/><path d="M12.54 12.25a.75.75 0 0 1 .46 1.34l-2.5 1.25a.75.75 0 0 0-.46 1.34l2.5 1.25a.75.75 0 0 1-.46 1.34l-10-5a.75.75 0 0 1 0-1.34l10-5Z"/></svg>
+                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.54 2.25a.75.75 0 0 1 .46 1.34l-2.5 1.25a.75.75 0 0 0-.46 1.34l2.5 1.25a.75.75 0 0 1-.46 1.34l-10-5a.75.75 0 0 1 0-1.34l10-5Z"/><path d="M12.54 12.25a.75.75 0 0 1 .46 1.34l-2.5 1.25a.75.75 0 0 0-.46 1.34l2.5 1.25a.75.75 0 0 1-.46 1.34l-10-5a.75.75 0 0 1 0-1.34l10-5Z"/></svg>
                         Scénario 2 : Vente aux EAU
                     </h3>
                     <h4 class="font-semibold mb-2 text-gray-700">D. Coûts Logistiques (par pièce)</h4>
@@ -383,7 +413,7 @@
                 <!-- SCENARIO US -->
                 <div class="bg-purple-50 border border-purple-200 p-6 rounded-lg">
                     <h3 class="font-bold text-xl mb-4 text-purple-800 flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
                         Scénario 3 : Vente aux US
                     </h3>
                     <h4 class="font-semibold mb-2 text-gray-700">E. Coûts Logistiques (par pièce)</h4>
@@ -672,7 +702,12 @@
         }
 
         // --- DATA & STATE MANAGEMENT ---
-        function saveData() {
+        async function saveData() {
+            if (!isFirebaseConfigured) {
+                showNotification("Veuillez configurer Firebase pour la sauvegarde en ligne.", 3000);
+                return;
+            }
+
             const dataToSave = {
                 productData: productData,
                 marketCoefficients: marketCoefficients,
@@ -687,73 +722,93 @@
                 dataToSave.inputData[id] = getVal(id);
             });
 
-            localStorage.setItem('pricingCalculatorData', JSON.stringify(dataToSave));
-            showNotification('Données sauvegardées !');
+            try {
+                await db.collection("calculator").doc("calculatorState").set(dataToSave);
+                showNotification('Données sauvegardées en ligne !');
+            } catch (error) {
+                console.error("Erreur de sauvegarde sur Firebase:", error);
+                showNotification('Erreur de sauvegarde en ligne.', 3000);
+            }
         }
         
-        function loadData() {
-            const savedData = localStorage.getItem('pricingCalculatorData');
-            if (savedData) {
-                const parsedData = JSON.parse(savedData);
-                
-                if (parsedData.productData) {
-                    for (const range in parsedData.productData) {
-                        // Migration from old data structure
-                        if (parsedData.productData[range].hasOwnProperty('coeff_retailer')) delete parsedData.productData[range].coeff_retailer;
-                        if (parsedData.productData[range].hasOwnProperty('coeff_pvc')) delete parsedData.productData[range].coeff_pvc;
+        async function loadData() {
+            if (!isFirebaseConfigured) {
+                console.log("Firebase non configuré. Chargement des données par défaut.");
+                return;
+            }
+            try {
+                const docRef = db.collection("calculator").doc("calculatorState");
+                const doc = await docRef.get();
 
-                        if (parsedData.productData[range].hasOwnProperty('artiste') && !parsedData.productData[range].hasOwnProperty('artiste_heures')) {
-                            const totalArtisteCost = parsedData.productData[range].artiste;
-                            const defaultRate = 50;
-                            parsedData.productData[range].artiste_taux = defaultRate;
-                            parsedData.productData[range].artiste_heures = totalArtisteCost > 0 ? totalArtisteCost / defaultRate : 70;
-                            delete parsedData.productData[range].artiste;
+                if (doc.exists) {
+                    const parsedData = doc.data();
+                    
+                    if (parsedData.productData) {
+                        for (const range in parsedData.productData) {
+                            if (parsedData.productData[range].hasOwnProperty('coeff_retailer')) delete parsedData.productData[range].coeff_retailer;
+                            if (parsedData.productData[range].hasOwnProperty('coeff_pvc')) delete parsedData.productData[range].coeff_pvc;
+
+                            if (parsedData.productData[range].hasOwnProperty('artiste') && !parsedData.productData[range].hasOwnProperty('artiste_heures')) {
+                                const totalArtisteCost = parsedData.productData[range].artiste;
+                                const defaultRate = 50;
+                                parsedData.productData[range].artiste_taux = defaultRate;
+                                parsedData.productData[range].artiste_heures = totalArtisteCost > 0 ? totalArtisteCost / defaultRate : 70;
+                                delete parsedData.productData[range].artiste;
+                            }
+                        }
+                        productData = parsedData.productData;
+                    }
+
+                    if (parsedData.marketCoefficients) {
+                        marketCoefficients = parsedData.marketCoefficients;
+                    }
+                    
+                    if (parsedData.contentEditableData) {
+                        contentEditableFields.forEach(id => {
+                            const el = document.getElementById(id);
+                            if (el && parsedData.contentEditableData[id] !== undefined) {
+                                el.innerText = parsedData.contentEditableData[id];
+                            }
+                        });
+                    }
+                    
+                    if (parsedData.inputData) {
+                        inputFields.forEach(id => {
+                            const element = document.getElementById(id);
+                            if (element && parsedData.inputData[id] !== undefined) {
+                                element.value = parsedData.inputData[id];
+                            }
+                        });
+                    }
+
+                    if (parsedData.selectedRange) {
+                        const selector = document.getElementById('product_range');
+                        if (Array.from(selector.options).some(opt => opt.value === parsedData.selectedRange)) {
+                            selector.value = parsedData.selectedRange;
                         }
                     }
-                    productData = parsedData.productData;
-                }
 
-                if (parsedData.marketCoefficients) {
-                    marketCoefficients = parsedData.marketCoefficients;
-                }
-                
-                if (parsedData.contentEditableData) {
-                    contentEditableFields.forEach(id => {
-                        const el = document.getElementById(id);
-                        if (el && parsedData.contentEditableData[id] !== undefined) {
-                            el.innerText = parsedData.contentEditableData[id];
-                        }
-                    });
-                }
-                
-                if (parsedData.inputData) {
-                    inputFields.forEach(id => {
-                        const element = document.getElementById(id);
-                        if (element && parsedData.inputData[id] !== undefined) {
-                            element.value = parsedData.inputData[id];
-                        }
-                    });
-                }
+                    showNotification('Derniers coûts chargés depuis la base de données.', 1500);
 
-                if (parsedData.selectedRange) {
-                    const selector = document.getElementById('product_range');
-                    if (Array.from(selector.options).some(opt => opt.value === parsedData.selectedRange)) {
-                        selector.value = parsedData.selectedRange;
-                    }
+                } else {
+                    console.log("Aucun document de sauvegarde trouvé en ligne.");
                 }
-
-                showNotification('Derniers coûts chargés.', 1500);
+            } catch (error) {
+                console.error("Erreur de chargement depuis Firebase:", error);
             }
         }
 
         // --- INITIALIZATION & UI RENDERING ---
         async function initCalculator() {
+            if (!isFirebaseConfigured) {
+                document.getElementById('firebase-warning').classList.remove('hidden');
+            }
             populateRangeSelector();
-            loadData(); // Load saved data first
-            await fetchExchangeRates(); // Then try to fetch new rates which will override if successful
+            await loadData(); 
+            await fetchExchangeRates(); 
             renderVolumeInputs();
             renderMarketCoefficients();
-            updateDirectCosts(); // This already calls calculateAll()
+            updateDirectCosts();
         }
 
         async function fetchExchangeRates() {
@@ -785,7 +840,7 @@
                     statusEl.classList.add('text-green-400');
                 }
                 
-                calculateAll(); // Recalculate everything with the new rates
+                calculateAll();
 
             } catch (error) {
                 console.error('Failed to fetch exchange rates:', error);
@@ -840,7 +895,6 @@
             }
             container.innerHTML = html;
             
-            // Set values after rendering
             for (const marketKey in marketCoefficients) {
                 setCoeffValue(marketKey, 'retailer', marketCoefficients[marketKey].retailer);
                 setCoeffValue(marketKey, 'pvc', marketCoefficients[marketKey].pvc);
